@@ -1,21 +1,23 @@
+
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./config/db.config");
 
-const stellartdb = express();
+const app = express();
 
 var corsOptions = {
   origin: "http://localhost:8081"
 };
 
-stellartdb.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 
-stellartdb.use(bodyParser.json());
+app.use(bodyParser.json());
 
 
-stellartdb.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./models");
 const Role = db.role;
@@ -42,19 +44,19 @@ db.mongoose
   });
 
 
-stellartdb.get("/", (req, res) => {
+app.get("/", (req, res) => {
 
   res.json({ message: "Welcome to the Stellart Website" });
 
 });
 
 
-require("./routes/auth.routes")(stellartdb);
-require("./routes/user.routes")(stellartdb);
+require("./routes/auth.routes")(app);
+require("./routes/user.routes")(app);
 
 
 const PORT = process.env.PORT || 8080;
-stellartdb.listen(PORT, () => {
+app.listen(PORT, () => {
 
   console.log(`Server is running on port ${PORT}.`);
 

@@ -2,9 +2,9 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
 
 
-module.exports = function(stellartdb) {
+module.exports = function(app) {
 
-  stellartdb.use(function(req, res, next) {
+  app.use(function(req, res, next) {
 
     res.header(
 
@@ -17,11 +17,11 @@ module.exports = function(stellartdb) {
 
   });
 
-  stellartdb.get("/api/test/all", controller.allAccess);
+  app.get("/api/test/all", controller.allAccess);
 
-  stellartdb.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
 
-  stellartdb.get(
+  app.get(
 
     "/api/test/mod",
     [authJwt.verifyToken, authJwt.isModerator],
@@ -29,7 +29,7 @@ module.exports = function(stellartdb) {
 
   );
 
-  stellartdb.get(
+  app.get(
 
     "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],

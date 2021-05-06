@@ -2,9 +2,9 @@ const { verifySignUp } = require("../middleware");
 const controller = require("../controllers/auth.controller");
 
 
-module.exports = function(stellartdb) {
+module.exports = function(app) {
 
-  stellartdb.use(function(req, res, next) {
+  app.use(function(req, res, next) {
 
     res.header(
       "Access-Control-Allow-Headers",
@@ -15,7 +15,7 @@ module.exports = function(stellartdb) {
 
   });
 
-  stellartdb.post(
+  app.post(
 
     "/api/auth/signup",
 
@@ -28,6 +28,6 @@ module.exports = function(stellartdb) {
 
   );
 
-  stellartdb.post("/api/auth/signin", controller.signin);
+  app.post("/api/auth/signin", controller.signin);
   
 };
